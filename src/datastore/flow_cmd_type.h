@@ -175,6 +175,10 @@ enum flow_match_field {
   FLOW_MATCH_FIELD_MPLS_CW_FRAG,
   FLOW_MATCH_FIELD_MPLS_CW_LEN,
   FLOW_MATCH_FIELD_MPLS_CW_SEQ_NUM,
+  FLOW_MATCH_FIELD_GTPU_FLAGS,
+  FLOW_MATCH_FIELD_GTPU_VER,
+  FLOW_MATCH_FIELD_GTPU_MSGTYPE,
+  FLOW_MATCH_FIELD_GTPU_TEID,  
 
   FLOW_MATCH_FIELD_MAX,
 };
@@ -241,6 +245,10 @@ static const char *const flow_match_field_strs[FLOW_MATCH_FIELD_MAX] = {
   "mpls_cw_frag",                 /* FLOW_MATCH_FIELD_MPLS_CW_FRAG */
   "mpls_cw_len",                  /* FLOW_MATCH_FIELD_MPLS_CW_LEN */
   "mpls_cw_seq_num",              /* FLOW_MATCH_FIELD_MPLS_CW_SEQ_NUM */
+  "gtpu_flags",
+  "gtpu_ver",
+  "gtpu_msgtype",
+  "gtpu_teid"
 };
 
 /* action. */
