@@ -2479,6 +2479,103 @@ gre_seqnum_cmd_parse(const char *const argv[],
                           result);
 }
 
+
+#define FLOW_CMD_GTPU_FLAGS_MAX 31
+#define FLOW_CMD_GTPU_FLAGS_MIN 0
+#define FLOW_CMD_GTPU_FLAGS_LEN 1
+
+static lagopus_result_t
+gtpu_flags_cmd_parse(const char *const argv[],
+                     struct ofp_flow_mod *flow_mod,
+                     struct match_list *match_list,
+                     struct instruction_list *instruction_list,
+                     enum flow_cmd_type ftype,
+                     lagopus_dstring_t *result) {
+  return uint_field_parse((char ***) &argv, flow_mod,
+                          match_list, instruction_list,
+                          ftype,
+                          FLOW_CMD_GTPU_FLAGS_MIN,
+                          FLOW_CMD_GTPU_FLAGS_MAX,
+                          OFPXMT_OFB_GTPU_FLAGS,
+                          FLOW_CMD_GTPU_FLAGS_LEN,
+                          NULL,
+                          NULL,
+                          true,
+                          result);
+}
+
+#define FLOW_CMD_GTPU_VER_MAX 7
+#define FLOW_CMD_GTPU_VER_MIN 0
+#define FLOW_CMD_GTPU_VER_LEN 1
+
+static lagopus_result_t
+gtpu_ver_cmd_parse(const char *const argv[],
+                     struct ofp_flow_mod *flow_mod,
+                     struct match_list *match_list,
+                     struct instruction_list *instruction_list,
+                     enum flow_cmd_type ftype,
+                     lagopus_dstring_t *result) {
+  return uint_field_parse((char ***) &argv, flow_mod,
+                          match_list, instruction_list,
+                          ftype,
+                          FLOW_CMD_GTPU_VER_MIN,
+                          FLOW_CMD_GTPU_VER_MAX,
+                          OFPXMT_OFB_GTPU_VER,
+                          FLOW_CMD_GTPU_VER_LEN,
+                          NULL,
+                          NULL,
+                          true,
+                          result);
+}
+
+#define FLOW_CMD_GTPU_MSGTYPE_MAX UINT8_MAX
+#define FLOW_CMD_GTPU_MSGTYPE_MIN 0
+#define FLOW_CMD_GTPU_MSGTYPE_LEN 1
+
+static lagopus_result_t
+gtpu_msgtype_cmd_parse(const char *const argv[],
+                     struct ofp_flow_mod *flow_mod,
+                     struct match_list *match_list,
+                     struct instruction_list *instruction_list,
+                     enum flow_cmd_type ftype,
+                     lagopus_dstring_t *result) {
+  return uint_field_parse((char ***) &argv, flow_mod,
+                          match_list, instruction_list,
+                          ftype,
+                          FLOW_CMD_GTPU_MSGTYPE_MIN,
+                          FLOW_CMD_GTPU_MSGTYPE_MAX,
+                          OFPXMT_OFB_GTPU_MSGTYPE,
+                          FLOW_CMD_GTPU_MSGTYPE_LEN,
+                          NULL,
+                          NULL,
+                          false,
+                          result);
+}
+
+#define FLOW_CMD_GTPU_TEID_MAX UINT32_MAX
+#define FLOW_CMD_GTPU_TEID_MIN 0
+#define FLOW_CMD_GTPU_TEID_LEN 4
+
+static lagopus_result_t
+gtpu_teid_cmd_parse(const char *const argv[],
+                     struct ofp_flow_mod *flow_mod,
+                     struct match_list *match_list,
+                     struct instruction_list *instruction_list,
+                     enum flow_cmd_type ftype,
+                     lagopus_dstring_t *result) {
+  return uint_field_parse((char ***) &argv, flow_mod,
+                          match_list, instruction_list,
+                          ftype,
+                          FLOW_CMD_GTPU_TEID_MIN,
+                          FLOW_CMD_GTPU_TEID_MAX,
+                          OFPXMT_OFB_GTPU_TEID,
+                          FLOW_CMD_GTPU_TEID_LEN,
+                          value_uint32_hook,
+                          NULL,
+                          false,
+                          result);
+}
+
 /* oxm field (lisp_flags). */
 #define FLOW_CMD_LISP_FLAGS_MAX UINT8_MAX
 #define FLOW_CMD_LISP_FLAGS_MIN 0
@@ -3915,6 +4012,11 @@ flow_match_field_procs[FLOW_MATCH_FIELD_MAX]  = {
   mpls_cw_frag_cmd_parse,            /* FLOW_MATCH_FIELD_MPLS_CW_FRAG */
   mpls_cw_len_cmd_parse,             /* FLOW_MATCH_FIELD_MPLS_CW_LEN */
   mpls_cw_seq_num_cmd_parse,         /* FLOW_MATCH_FIELD_MPLS_CW_SEQ_NUM */
+  gtpu_flags_cmd_parse,
+  gtpu_ver_cmd_parse,
+  gtpu_msgtype_cmd_parse,
+  gtpu_teid_cmd_parse
+
 };
 
 static void*
