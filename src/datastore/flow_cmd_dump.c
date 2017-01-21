@@ -982,6 +982,17 @@ dump_match(struct match *match,
         goto done;
       }
       break;
+    case OFPXMT_OFB_GTPU_TEID:
+      memcpy(&val32, match->oxm_value, sizeof(uint32_t));
+      if ((ret = lagopus_dstring_appendf(
+                   result, DELIMITER_INSTERN(KEY_FMT "%"PRIu32),
+                   flow_match_field_strs[FLOW_MATCH_FIELD_GTPU_TEID],
+                   ntohl(val32))) !=
+          LAGOPUS_RESULT_OK) {
+        lagopus_perror(ret);
+        goto done;
+      }
+      break;
     case OFPXMT_OFB_LISP_FLAGS:
       memcpy(&val8, match->oxm_value, sizeof(uint8_t));
       if ((ret = lagopus_dstring_appendf(
@@ -1868,6 +1879,17 @@ dump_set_field(uint8_t *oxm,
                    result, KEY_FMT "%"PRIu32,
                    flow_match_field_strs[FLOW_MATCH_FIELD_GRE_SEQNUM],
                    ntohl(val32))) !=
+          LAGOPUS_RESULT_OK) {
+        lagopus_perror(ret);
+        goto done;
+      }
+      break;
+    case OFPXMT_OFB_GTPU_TEID:
+      memcpy(&val32, oxm_value, sizeof(uint32_t));
+      if ((ret = lagopus_dstring_appendf(
+                   result, KEY_FMT "%"PRIu32,
+                   flow_match_field_strs[FLOW_MATCH_FIELD_GTPU_TEID],
+                   ntohs(val32))) !=
           LAGOPUS_RESULT_OK) {
         lagopus_perror(ret);
         goto done;
