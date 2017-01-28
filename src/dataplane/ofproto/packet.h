@@ -183,7 +183,7 @@ struct gtpu_hdr {
   uint8_t verflags;
   uint8_t msgtype;
   uint16_t length;
-  uint32_t te_id;
+  uint32_t gtpu_teid;
 } __attribute__((__packed__));
 
 #define GTPU_PORT 2152

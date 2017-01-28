@@ -1157,7 +1157,7 @@ execute_action_set_field(struct lagopus_packet *pkt,
       break;
 
     case OFPXMT_OFB_GTPU_TEID:
-      OS_MEMCPY(&pkt->gtpu->te_id, oxm_value, 4);
+      OS_MEMCPY(&pkt->gtpu->gtpu_teid, oxm_value, 4);
       break;
 
     case OFPXMT_OFB_GTPU_EXTN_HDR:
@@ -2131,7 +2131,7 @@ execute_action_encap(struct lagopus_packet *pkt,
       new_gtpu->msgtype = 255; /* G-PDU */
       /* note: extension header size is included in length */
       new_gtpu->length = OS_HTONS(OS_M_PKTLEN(m) - sizeof(struct gtpu_hdr));
-      new_gtpu->te_id = 0;
+      new_gtpu->gtpu_teid = 0;
       pkt->gtpu = new_gtpu;
     }
       break;
