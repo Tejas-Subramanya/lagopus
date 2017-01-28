@@ -2451,6 +2451,7 @@ flow_dump_match(uint8_t oxm_field, uint8_t oxm_length, uint8_t *oxm_value,
     [OFPXMT_OFB_PBB_ISID]       = { "pbb_isid",         PRINTER_X24 },
     [OFPXMT_OFB_TUNNEL_ID]      = { "tunnel_id",        PRINTER_U64 },
     [OFPXMT_OFB_IPV6_EXTHDR]    = { "ipv6_exthdr",      PRINTER_U16 },
+    [OFPXMT_OFB_GTPU_TEID]	= { "gtpu_teid",        PRINTER_U32 },
   };
 
   field = oxm_field >> 1;

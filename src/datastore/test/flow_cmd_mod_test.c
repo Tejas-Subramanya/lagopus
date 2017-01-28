@@ -5090,7 +5090,38 @@ test_flow_cmd_mod_add_match_tunnel_id_bad_value(void) {
                  &ds, str, test_str1);
 }
 
+void
+test_flow_cmd_mod_add_match_gtpu_teid_01(void) {
+  lagopus_result_t ret = LAGOPUS_RESULT_ANY_FAILURES;
+  datastore_interp_state_t state = DATASTORE_INTERP_STATE_AUTO_COMMIT;
+  char *str = NULL;
+  const char *argv1[] = {"flow", "b1", "add",
+                         "gtpu_teid=1",
+                         NULL
+  };
+  const char test_str1[] = "{\"ret\":\"OK\"}";
+  const char test_str2[] =
+      "{\"name\":\""DATASTORE_NAMESPACE_DELIMITER"b1\",\n"
+      "\"tables\":[{\"table\":0,\n"
+      "\"flows\":[{\"priority\":0,\n"
+      "\"idle_timeout\":0,\n"
+      "\"hard_timeout\":0,\n"
+      "\"cookie\":0,\n"
+      "\"gtpu_teid\":\"1\",\n"
+      "\"actions\":[]}]}]}";
+
+  /* add cmd. */
+  TEST_CMD_PARSE(ret, LAGOPUS_RESULT_OK,
+                 flow_cmd_parse, &interp, state,
+                 ARGV_SIZE(argv1), argv1, &tbl, NULL,
+                 &ds, str, test_str1);
+
+  /* dump cmd. */
+  TEST_CMD_FLOW_DUMP(ret, LAGOPUS_RESULT_OK, "b1", OFPTT_ALL,
+                     &ds, str, test_str2);
+}
 /* ipv6_exthdr. */
+
 void
 test_flow_cmd_mod_add_match_ipv6_exthdr_01(void) {
   lagopus_result_t ret = LAGOPUS_RESULT_ANY_FAILURES;
@@ -5918,6 +5949,37 @@ test_flow_cmd_mod_add_match_gre_key_01(void) {
       "\"hard_timeout\":0,\n"
       "\"cookie\":0,\n"
       "\"gre_key\":\"0\",\n"
+      "\"actions\":[]}]}]}";
+
+  /* add cmd. */
+  TEST_CMD_PARSE(ret, LAGOPUS_RESULT_OK,
+                 flow_cmd_parse, &interp, state,
+                 ARGV_SIZE(argv1), argv1, &tbl, NULL,
+                 &ds, str, test_str1);
+
+  /* dump cmd. */
+  TEST_CMD_FLOW_DUMP(ret, LAGOPUS_RESULT_OK, "b1", OFPTT_ALL,
+                     &ds, str, test_str2);
+}
+
+void
+test_flow_cmd_mod_add_match_gtpu_teid_02(void) {
+  lagopus_result_t ret = LAGOPUS_RESULT_ANY_FAILURES;
+  datastore_interp_state_t state = DATASTORE_INTERP_STATE_AUTO_COMMIT;
+  char *str = NULL;
+  const char *argv1[] = {"flow", "b1", "add",
+                         "gtpu_teid=2",
+                         NULL
+  };
+  const char test_str1[] = "{\"ret\":\"OK\"}";
+  const char test_str2[] =
+      "{\"name\":\""DATASTORE_NAMESPACE_DELIMITER"b1\",\n"
+      "\"tables\":[{\"table\":0,\n"
+      "\"flows\":[{\"priority\":0,\n"
+      "\"idle_timeout\":0,\n"
+      "\"hard_timeout\":0,\n"
+      "\"cookie\":0,\n"
+      "\"gtpu_teid\":\"2\",\n"
       "\"actions\":[]}]}]}";
 
   /* add cmd. */
@@ -10329,6 +10391,37 @@ test_flow_cmd_mod_add_apply_actions_gre_key_01(void) {
       "\"cookie\":0,\n"
       "\"actions\":[{\"apply_actions\":\n"
       "[{\"gre_key\":1}]}]}]}]}";
+
+  /* add cmd. */
+  TEST_CMD_PARSE(ret, LAGOPUS_RESULT_OK,
+                 flow_cmd_parse, &interp, state,
+                 ARGV_SIZE(argv1), argv1, &tbl, NULL,
+                 &ds, str, test_str1);
+
+  /* dump cmd. */
+  TEST_CMD_FLOW_DUMP(ret, LAGOPUS_RESULT_OK, "b1", OFPTT_ALL,
+                     &ds, str, test_str2);
+}
+
+void
+test_flow_cmd_mod_add_apply_actions_gtpu_teid_01(void) {
+  lagopus_result_t ret = LAGOPUS_RESULT_ANY_FAILURES;
+  datastore_interp_state_t state = DATASTORE_INTERP_STATE_AUTO_COMMIT;
+  char *str = NULL;
+  const char *argv1[] = {"flow", "b1", "add",
+                         "apply_actions=gtpu_teid:1",
+                         NULL
+  };
+  const char test_str1[] = "{\"ret\":\"OK\"}";
+  const char test_str2[] =
+      "{\"name\":\""DATASTORE_NAMESPACE_DELIMITER"b1\",\n"
+      "\"tables\":[{\"table\":0,\n"
+      "\"flows\":[{\"priority\":0,\n"
+      "\"idle_timeout\":0,\n"
+      "\"hard_timeout\":0,\n"
+      "\"cookie\":0,\n"
+      "\"actions\":[{\"apply_actions\":\n"
+      "[{\"gtpu_teid\":1}]}]}]}]}";
 
   /* add cmd. */
   TEST_CMD_PARSE(ret, LAGOPUS_RESULT_OK,
