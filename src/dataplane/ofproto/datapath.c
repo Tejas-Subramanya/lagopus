@@ -2032,7 +2032,7 @@ execute_action_decap(struct lagopus_packet *pkt,
       break;
 
     case (OFPHTN_UDP_TCP_PORT << 16) | GTPU_PORT:
-      new_p = OS_M_ADJ(m, sizeof(struct gtpu_hdr));
+      new_p = OS_M_ADJ(m, sizeof(GTPU_HDR));
       if (IPV4_VER((IPV4_HDR *)new_p) == 4) {
         new_type = (OFPHTN_ETHERTYPE << 16) | ETHERTYPE_IP;
       } else if (IPV6_VER((IPV6_HDR *)new_p) == 6) {
@@ -2124,14 +2124,14 @@ execute_action_encap(struct lagopus_packet *pkt,
       break;
 
     case ((OFPHTN_UDP_TCP_PORT << 16) | GTPU_PORT): {
-      struct gtpu_hdr *new_gtpu;
+      GTPU_HDR *new_gtpu;
 
-      new_gtpu = (struct gtpu_hdr *)OS_M_PREPEND(m, sizeof(struct gtpu_hdr));
+      new_gtpu = (GTPU_HDR *)OS_M_PREPEND(m, sizeof(struct gtpu_hdr));
       new_gtpu->verflags = 0x30; /* ver = 1, pt = 1 */
       new_gtpu->msgtype = 255; /* G-PDU */
       /* note: extension header size is included in length */
-      new_gtpu->length = OS_HTONS(OS_M_PKTLEN(m) - sizeof(struct gtpu_hdr));
-      new_gtpu->gtpu_teid = 0;
+      new_gtpu->length = OS_HTONS(OS_M_PKTLEN(m) - sizeof(GTPU_HDR));
+      new_gtpu->gtpu_teid = 1;
       pkt->gtpu = new_gtpu;
     }
       break;

@@ -368,6 +368,7 @@ struct lagopus_packet {
 #define ICMP_CKSUM(h) ((h)->icmp_cksum)
 #define GRE_HDR       struct gre_hdr
 #define VXLAN_HDR       struct vxlanhdr
+#define GTPU_HDR	struct gtpu_hdr
 #define MTOD_OFS(m, offset, type)                       \
   (type)(OS_MTOD((m), unsigned char *) + (offset))
 
